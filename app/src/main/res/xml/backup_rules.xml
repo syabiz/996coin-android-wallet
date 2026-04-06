@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Wallet private keys and seed are stored in EncryptedSharedPreferences
+    and the wallet protobuf file. We EXCLUDE both from cloud backup
+    to avoid inadvertent key exposure.
+-->
+<full-backup-content>
+    <!-- Exclude sensitive wallet data from backup -->
+    <exclude domain="file" path="996coin.wallet" />
+    <exclude domain="file" path="996coin.spvchain" />
+    <exclude domain="sharedpref" path="996coin_secure_prefs.xml" />
+
+    <!-- Allow user preferences (non-sensitive) -->
+    <include domain="sharedpref" path="user_preferences.xml" />
+</full-backup-content>

@@ -1,0 +1,16 @@
+# Android/Gradle
+.gradle/
+build/
+local.properties
+*.iml
+.idea/
+*.keystore
+*.jks
+
+# Wallet files (NEVER commit!)
+*.wallet
+*.spvchain
+
+# OS
+.DS_Store
+Thumbs.db

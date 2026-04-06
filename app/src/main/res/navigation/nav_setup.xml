@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_setup"
+    app:startDestination="@id/welcomeFragment">
+
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.WelcomeFragment"
+        android:label="Welcome"
+        tools:layout="@layout/fragment_welcome">
+        <action android:id="@+id/action_welcome_to_createWallet"
+            app:destination="@id/createWalletFragment"/>
+        <action android:id="@+id/action_welcome_to_restoreWallet"
+            app:destination="@id/restoreWalletFragment"/>
+        <action android:id="@+id/action_welcome_to_importWif"
+            app:destination="@id/importWifFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/createWalletFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.CreateWalletFragment"
+        android:label="Recovery Phrase"
+        tools:layout="@layout/fragment_create_wallet">
+        <action android:id="@+id/action_create_to_verifyWords"
+            app:destination="@id/verifyWordsFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/verifyWordsFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.VerifyWordsFragment"
+        android:label="Verify Phrase"
+        tools:layout="@layout/fragment_verify_words">
+        <action android:id="@+id/action_verify_to_setPin"
+            app:destination="@id/setPinFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/restoreWalletFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.RestoreWalletFragment"
+        android:label="Restore Wallet"
+        tools:layout="@layout/fragment_restore_wallet">
+        <action android:id="@+id/action_restore_to_setPin"
+            app:destination="@id/setPinFragment"/>
+    </fragment>
+
+    <!-- Import WIF dari wallet Qt -->
+    <fragment
+        android:id="@+id/importWifFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.ImportWifFragment"
+        android:label="Import Private Key"
+        tools:layout="@layout/fragment_import_wif">
+        <action android:id="@+id/action_importWif_to_setPin"
+            app:destination="@id/setPinFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/setPinFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.SetPinFragment"
+        android:label="Set PIN"
+        tools:layout="@layout/fragment_set_pin">
+        <action android:id="@+id/action_setPin_to_complete"
+            app:destination="@id/setupCompleteFragment"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/setupCompleteFragment"
+        android:name="com.coin996.wallet.ui.fragments.setup.SetupCompleteFragment"
+        android:label="All Set!"
+        tools:layout="@layout/fragment_setup_complete"/>
+
+</navigation>

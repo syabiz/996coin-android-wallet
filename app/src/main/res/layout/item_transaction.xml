@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    app:cardCornerRadius="14dp"
+    app:cardElevation="2dp"
+    app:cardBackgroundColor="?attr/colorSurface">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <!-- Direction icon with colored circle background -->
+        <FrameLayout
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_marginEnd="14dp">
+
+            <!-- Background circle -->
+            <View
+                android:id="@+id/tx_icon_bg"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:background="@drawable/bg_circle_green" />
+
+            <!-- Arrow icon -->
+            <ImageView
+                android:id="@+id/iv_tx_direction"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_gravity="center"
+                android:src="@drawable/ic_arrow_down"
+                android:tint="@color/accent_green"
+                android:contentDescription="Transaction direction" />
+        </FrameLayout>
+
+        <!-- Middle: type + address + date -->
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <!-- Sent / Received label -->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_tx_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tx_received"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    tools:text="Received" />
+
+                <!-- Pending badge -->
+                <TextView
+                    android:id="@+id/tv_pending_badge"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="Pending"
+                    android:textSize="10sp"
+                    android:textColor="@color/primary"
+                    android:background="@drawable/bg_pill_orange"
+                    android:paddingStart="8dp"
+                    android:paddingEnd="8dp"
+                    android:paddingTop="2dp"
+                    android:paddingBottom="2dp"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+            <!-- Address -->
+            <TextView
+                android:id="@+id/tv_tx_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:ellipsize="middle"
+                android:singleLine="true"
+                android:fontFamily="monospace"
+                android:textSize="12sp"
+                android:textColor="@color/text_secondary"
+                tools:text="NQK5Xh7NjMoJ1sSmHjCbpTpKXqrCd..." />
+
+            <!-- Date -->
+            <TextView
+                android:id="@+id/tv_tx_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textSize="11sp"
+                android:textColor="@color/text_hint"
+                tools:text="05 Apr 2026, 14:32" />
+        </LinearLayout>
+
+        <!-- Right: amount -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="end">
+
+            <TextView
+                android:id="@+id/tv_tx_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:textColor="@color/accent_green"
+                tools:text="+10.5 NNS" />
+
+            <TextView
+                android:id="@+id/tv_tx_confirmations"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:textSize="11sp"
+                android:textColor="@color/text_hint"
+                tools:text="6 conf." />
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 996coin brand colors -->
+    <color name="primary">#FF6B00</color>        <!-- Deep orange — energy of "996" work culture flipped positive -->
+    <color name="primary_dark">#CC5500</color>
+    <color name="primary_light">#FF9A4D</color>
+    <color name="on_primary">#FFFFFF</color>
+
+    <color name="secondary">#1A1A2E</color>       <!-- Deep navy for contrast -->
+    <color name="secondary_variant">#16213E</color>
+    <color name="on_secondary">#FFFFFF</color>
+
+    <color name="accent">#FFD700</color>          <!-- Gold — coin -->
+    <color name="accent_green">#00C896</color>    <!-- Positive / received -->
+    <color name="accent_red">#FF4560</color>      <!-- Negative / sent -->
+
+    <!-- Background -->
+    <color name="background">#F5F6FA</color>
+    <color name="background_card">#FFFFFF</color>
+    <color name="background_dark">#1A1A2E</color>
+
+    <!-- Surface -->
+    <color name="surface">#FFFFFF</color>
+    <color name="surface_variant">#F0F0F5</color>
+
+    <!-- Text -->
+    <color name="text_primary">#1A1A2E</color>
+    <color name="text_secondary">#6B7280</color>
+    <color name="text_hint">#9CA3AF</color>
+    <color name="text_on_dark">#FFFFFF</color>
+
+    <!-- Divider -->
+    <color name="divider">#E5E7EB</color>
+
+    <!-- Gradient start/end for wallet card -->
+    <color name="gradient_start">#FF6B00</color>
+    <color name="gradient_end">#FF3D00</color>
+
+    <!-- Status bar -->
+    <color name="status_bar">#CC5500</color>
+
+    <!-- Sync colors -->
+    <color name="sync_active">#00C896</color>
+    <color name="sync_inactive">#9CA3AF</color>
+
+    <!-- Chart -->
+    <color name="chart_line">#FF6B00</color>
+    <color name="chart_fill">#33FF6B00</color>
+</resources>

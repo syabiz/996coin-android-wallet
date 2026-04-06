@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Import Private Key (WIF)"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Info banner Qt compatibility -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_warning_banner"
+            android:padding="14dp"
+            android:layout_marginBottom="20dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Gunakan private key WIF dari wallet Qt 996coin.\n\nDi wallet Qt: Pilih alamat → kanan klik → Copy Private Key.\n\nSatu private key akan menghasilkan 3 alamat (Legacy, Nested SegWit, Native SegWit)."
+                android:textColor="#7A4A00"
+                android:textSize="13sp"
+                android:lineSpacingMultiplier="1.35" />
+        </LinearLayout>
+
+        <!-- WIF input -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_wif"
+            style="@style/Widget.996Wallet.TextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="WIF Private Key"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_qr_scan"
+            app:endIconContentDescription="Scan QR">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_wif"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textNoSuggestions|textVisiblePassword"
+                android:fontFamily="monospace"
+                android:textSize="13sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Hasil: 3 alamat yang ter-derive -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_derived_addresses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:visibility="gone"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="2dp"
+            app:cardBackgroundColor="?attr/colorSurface">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Alamat yang ter-derive:"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_primary"
+                    android:layout_marginBottom="12dp" />
+
+                <!-- Legacy -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Legacy (P2PKH) — dimulai N"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+                    <TextView
+                        android:id="@+id/tv_legacy_addr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_primary" />
+                    <ImageButton
+                        android:id="@+id/btn_copy_legacy"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_copy"
+                        android:tint="@color/primary"
+                        android:contentDescription="Copy" />
+                </LinearLayout>
+
+                <!-- Nested SegWit -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nested SegWit (P2SH-P2WPKH)"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="12dp">
+                    <TextView
+                        android:id="@+id/tv_nested_addr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_primary" />
+                    <ImageButton
+                        android:id="@+id/btn_copy_nested"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_copy"
+                        android:tint="@color/primary"
+                        android:contentDescription="Copy" />
+                </LinearLayout>
+
+                <!-- Native SegWit -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Native SegWit (Bech32 P2WPKH) — dimulai 996"
+                    android:textSize="11sp"
+                    android:textColor="@color/text_secondary" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <TextView
+                        android:id="@+id/tv_native_addr"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="monospace"
+                        android:textSize="12sp"
+                        android:textColor="@color/text_primary" />
+                    <ImageButton
+                        android:id="@+id/btn_copy_native"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:src="@drawable/ic_copy"
+                        android:tint="@color/primary"
+                        android:contentDescription="Copy" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- Error -->
+        <TextView
+            android:id="@+id/tv_wif_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/accent_red"
+            android:textSize="13sp"
+            android:visibility="gone" />
+
+        <!-- Loading -->
+        <LinearLayout
+            android:id="@+id/loading_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+            <ProgressBar android:layout_width="24dp" android:layout_height="24dp"
+                android:layout_marginEnd="10dp"/>
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:text="Mengimpor key dan scanning blockchain…"
+                android:textColor="@color/text_secondary" android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- Import button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_import"
+            style="@style/Widget.996Wallet.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="20dp"
+            android:text="Import Key"
+            android:enabled="false" />
+
+        <!-- Lanjut ke PIN (muncul setelah import berhasil) -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_continue"
+            style="@style/Widget.996Wallet.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="Lanjut →"
+            android:visibility="gone" />
+
+    </LinearLayout>
+</ScrollView>

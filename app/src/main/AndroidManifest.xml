@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Network permissions for SPV and price API -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <!-- Camera for QR scanning -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <!-- Biometric auth -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
+    <!-- Vibrate for feedback -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Foreground service for SPV sync -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+
+    <!-- Wake lock to keep SPV running -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
+    <!-- Receive boot completed to restart sync service -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
+    <application
+        android:name=".WalletApplication"
+        android:allowBackup="false"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.Coin996Wallet"
+        android:networkSecurityConfig="@xml/network_security_config"
+        tools:targetApi="31">
+
+        <!-- Splash / Entry Activity -->
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Coin996Wallet.Splash"
+            android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <!-- Setup / Onboarding Activity -->
+        <activity
+            android:name=".ui.activities.SetupActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+
+        <!-- Main Wallet Activity -->
+        <activity
+            android:name=".ui.activities.MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"
+            android:launchMode="singleTop">
+            <!-- Handle 996coin: URI scheme -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="996coin" />
+            </intent-filter>
+        </activity>
+
+        <!-- SPV Sync Background Service -->
+        <service
+            android:name=".service.SpvSyncService"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Price update WorkManager worker -->
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
+
+        <!-- Boot receiver to restart sync -->
+        <receiver
+            android:name=".service.BootReceiver"
+            android:exported="true">
+            <intent-filter android:priority="1000">
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+            </intent-filter>
+        </receiver>
+
+        <!-- File provider for sharing -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
+    </application>
+
+</manifest>

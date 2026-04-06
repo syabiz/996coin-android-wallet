@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:padding="28dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="@string/setup_pin_title"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_primary" />
+
+    <TextView
+        android:id="@+id/tv_pin_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Choose a 6-digit PIN to secure your wallet"
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:gravity="center" />
+
+    <!-- PIN dot indicators -->
+    <LinearLayout
+        android:id="@+id/pin_dots_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="32dp">
+
+        <View android:id="@+id/dot1" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+        <View android:id="@+id/dot2" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+        <View android:id="@+id/dot3" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+        <View android:id="@+id/dot4" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+        <View android:id="@+id/dot5" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+        <View android:id="@+id/dot6" android:layout_width="14dp" android:layout_height="14dp"
+            android:layout_margin="8dp" android:background="@drawable/bg_pin_dot_empty" />
+    </LinearLayout>
+
+    <!-- Numpad -->
+    <GridLayout
+        android:id="@+id/numpad"
+        android:layout_width="280dp"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:rowCount="4">
+
+        <!-- Row 1: 1 2 3 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_1" style="@style/Widget.996Wallet.PinKey"
+            android:text="1" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_2" style="@style/Widget.996Wallet.PinKey"
+            android:text="2" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_3" style="@style/Widget.996Wallet.PinKey"
+            android:text="3" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+
+        <!-- Row 2: 4 5 6 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_4" style="@style/Widget.996Wallet.PinKey"
+            android:text="4" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_5" style="@style/Widget.996Wallet.PinKey"
+            android:text="5" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_6" style="@style/Widget.996Wallet.PinKey"
+            android:text="6" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+
+        <!-- Row 3: 7 8 9 -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_7" style="@style/Widget.996Wallet.PinKey"
+            android:text="7" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_8" style="@style/Widget.996Wallet.PinKey"
+            android:text="8" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_9" style="@style/Widget.996Wallet.PinKey"
+            android:text="9" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+
+        <!-- Row 4: [blank] 0 [backspace] -->
+        <View android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_0" style="@style/Widget.996Wallet.PinKey"
+            android:text="0" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/key_backspace" style="@style/Widget.996Wallet.PinKey"
+            android:text="⌫" android:layout_width="0dp" android:layout_height="72dp"
+            android:layout_columnWeight="1" />
+    </GridLayout>
+
+    <!-- Error -->
+    <TextView
+        android:id="@+id/tv_pin_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/accent_red"
+        android:textSize="13sp"
+        android:visibility="gone" />
+
+</LinearLayout>

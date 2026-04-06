@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">996coin Wallet</string>
+    <string name="app_tagline">Your 996coin, Your Control</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+    <string name="nav_send">Send</string>
+    <string name="nav_receive">Receive</string>
+    <string name="nav_history">History</string>
+    <string name="nav_settings">Settings</string>
+
+    <!-- Home -->
+    <string name="balance_label">Available Balance</string>
+    <string name="pending_label">Pending</string>
+    <string name="price_label">NNS Price</string>
+    <string name="sync_progress">Syncing… %1$d%%</string>
+    <string name="sync_done">Synced</string>
+    <string name="peers_connected">%1$d peers</string>
+    <string name="chart_24h">24h Price Chart</string>
+    <string name="pull_to_refresh">Pull to refresh</string>
+
+    <!-- Send -->
+    <string name="send_title">Send NNS</string>
+    <string name="send_to_address">Recipient address</string>
+    <string name="send_amount">Amount (NNS)</string>
+    <string name="send_amount_usd">≈ %1$s USD</string>
+    <string name="send_max">MAX</string>
+    <string name="send_scan_qr">Scan QR</string>
+    <string name="send_button">Send</string>
+    <string name="send_confirm_title">Confirm Transaction</string>
+    <string name="send_confirm_msg">Send %1$s NNS to\n%2$s</string>
+    <string name="send_success_title">Transaction Sent!</string>
+    <string name="send_success_txid">TX ID: %1$s</string>
+    <string name="send_error_address">Invalid 996coin address</string>
+    <string name="send_error_amount">Invalid amount</string>
+    <string name="send_error_insufficient">Insufficient balance</string>
+    <string name="fee_label">Network fee</string>
+
+    <!-- Receive -->
+    <string name="receive_title">Receive NNS</string>
+    <string name="receive_address_label">Your 996coin Address</string>
+    <string name="receive_copy">Copy Address</string>
+    <string name="receive_share">Share</string>
+    <string name="receive_new_address">New Address</string>
+    <string name="address_copied">Address copied!</string>
+    <string name="receive_note">Share this address to receive NNS coins</string>
+
+    <!-- History -->
+    <string name="history_title">Transactions</string>
+    <string name="history_empty">No transactions yet</string>
+    <string name="tx_sent">Sent</string>
+    <string name="tx_received">Received</string>
+    <string name="tx_pending">Pending…</string>
+    <string name="tx_confirmations">%1$d confirmations</string>
+    <string name="view_on_explorer">View on Explorer</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_change_pin">Change PIN</string>
+    <string name="settings_biometric">Biometric Login</string>
+    <string name="settings_backup">Backup &amp; Recovery</string>
+    <string name="settings_show_seed">Show Recovery Phrase</string>
+    <string name="settings_network">Network</string>
+    <string name="settings_peers">Connected Peers</string>
+    <string name="settings_rescan">Rescan Blockchain</string>
+    <string name="settings_about">About</string>
+    <string name="settings_version">Version %1$s</string>
+
+    <!-- Setup -->
+    <string name="setup_welcome">Welcome to\n996coin Wallet</string>
+    <string name="setup_create">Create New Wallet</string>
+    <string name="setup_restore">Restore Existing Wallet</string>
+    <string name="setup_seed_title">Your Recovery Phrase</string>
+    <string name="setup_seed_warning">Write these 12 words down and store them safely. Anyone with these words can access your funds.</string>
+    <string name="setup_seed_confirm">I have written these words down</string>
+    <string name="setup_verify_title">Verify Recovery Phrase</string>
+    <string name="setup_verify_hint">Enter word #%1$d</string>
+    <string name="setup_restore_title">Enter Recovery Phrase</string>
+    <string name="setup_restore_hint">Enter your 12-word recovery phrase separated by spaces</string>
+    <string name="setup_pin_title">Set a PIN</string>
+    <string name="setup_pin_hint">Enter 6-digit PIN</string>
+    <string name="setup_pin_confirm">Confirm PIN</string>
+    <string name="setup_pin_mismatch">PINs do not match</string>
+    <string name="setup_complete">Wallet Ready!</string>
+    <string name="setup_complete_sub">Your 996coin wallet is set up and syncing</string>
+    <string name="btn_next">Next</string>
+    <string name="btn_done">Done</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_copy">Copy</string>
+
+    <!-- PIN -->
+    <string name="pin_title">Enter PIN</string>
+    <string name="pin_subtitle">Enter your 6-digit PIN to continue</string>
+    <string name="pin_wrong">Incorrect PIN</string>
+    <string name="pin_use_biometric">Use biometric</string>
+
+    <!-- Errors -->
+    <string name="error_no_network">No network connection</string>
+    <string name="error_sync_failed">Sync failed. Retrying…</string>
+    <string name="error_generic">Something went wrong</string>
+    <string name="send_scan_prompt">Scan 996coin address QR</string>
+    <string name="balance_amount_format">%1$s NNS</string>
+    <string name="send_failed_title">Transaction Failed</string>
+    <string name="btn_ok">OK</string>
+</resources>

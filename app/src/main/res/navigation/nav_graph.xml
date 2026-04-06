@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.coin996.wallet.ui.fragments.HomeFragment"
+        android:label="@string/nav_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/sendFragment"
+        android:name="com.coin996.wallet.ui.fragments.SendFragment"
+        android:label="@string/nav_send"
+        tools:layout="@layout/fragment_send">
+        <argument
+            android:name="address"
+            app:argType="string"
+            android:defaultValue="" />
+        <argument
+            android:name="amount"
+            app:argType="float"
+            android:defaultValue="0" />
+        <argument
+            android:name="label"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/receiveFragment"
+        android:name="com.coin996.wallet.ui.fragments.ReceiveFragment"
+        android:label="@string/nav_receive"
+        tools:layout="@layout/fragment_receive" />
+
+    <fragment
+        android:id="@+id/historyFragment"
+        android:name="com.coin996.wallet.ui.fragments.HistoryFragment"
+        android:label="@string/nav_history"
+        tools:layout="@layout/fragment_history" />
+
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.coin996.wallet.ui.fragments.SettingsFragment"
+        android:label="@string/nav_settings"
+        tools:layout="@layout/fragment_settings" />
+
+    <!-- Setup nav graph (separate) -->
+    <include app:graph="@navigation/nav_setup" />
+
+</navigation>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="screen_padding">20dp</dimen>
+    <dimen name="card_corner_radius">16dp</dimen>
+    <dimen name="card_elevation">4dp</dimen>
+    <dimen name="button_corner_radius">12dp</dimen>
+    <dimen name="icon_size_small">20dp</dimen>
+    <dimen name="icon_size_medium">24dp</dimen>
+    <dimen name="icon_size_large">48dp</dimen>
+    <dimen name="balance_text_size">36sp</dimen>
+    <dimen name="title_text_size">22sp</dimen>
+    <dimen name="body_text_size">15sp</dimen>
+    <dimen name="caption_text_size">12sp</dimen>
+    <dimen name="qr_code_size">220dp</dimen>
+    <dimen name="bottom_nav_height">64dp</dimen>
+    <dimen name="chart_height">160dp</dimen>
+    <dimen name="spacing_xs">4dp</dimen>
+    <dimen name="spacing_s">8dp</dimen>
+    <dimen name="spacing_m">16dp</dimen>
+    <dimen name="spacing_l">24dp</dimen>
+    <dimen name="spacing_xl">32dp</dimen>
+    <dimen name="spacing_xxl">48dp</dimen>
+</resources>

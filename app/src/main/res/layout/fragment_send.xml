@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <!-- Title -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_title"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_primary"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Available balance chip -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_pill_orange"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:layout_marginBottom="24dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Available: "
+                android:textColor="@color/primary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_available_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/primary"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:text="0.00 NNS" />
+        </LinearLayout>
+
+        <!-- Recipient address field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_address"
+            style="@style/Widget.996Wallet.TextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/send_to_address"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_qr_scan"
+            app:endIconContentDescription="@string/send_scan_qr">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:fontFamily="monospace"
+                android:textSize="14sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Amount field -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/til_amount"
+            style="@style/Widget.996Wallet.TextInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/send_amount"
+            app:suffixText="NNS"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_max"
+            app:endIconContentDescription="@string/send_max">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_amount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- USD equivalent -->
+        <TextView
+            android:id="@+id/tv_amount_usd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginStart="4dp"
+            android:text="≈ $0.00 USD"
+            android:textColor="@color/text_secondary"
+            android:textSize="13sp" />
+
+        <!-- Fee estimate -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_card_rounded"
+            android:padding="16dp">
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_fee"
+                android:tint="@color/text_secondary"
+                android:layout_marginEnd="8dp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/fee_label"
+                android:textColor="@color/text_secondary"
+                android:textSize="13sp" />
+
+            <TextView
+                android:id="@+id/tv_fee"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="~0.0001 NNS"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- Spacer -->
+        <View android:layout_width="match_parent" android:layout_height="0dp"
+            android:layout_weight="1" android:layout_marginTop="16dp" />
+
+        <!-- Send button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_send"
+            style="@style/Widget.996Wallet.Button.Primary"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/send_button" />
+
+        <!-- Loading indicator -->
+        <LinearLayout
+            android:id="@+id/loading_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Broadcasting transaction…"
+                android:textColor="@color/text_secondary"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>
