@@ -112,24 +112,26 @@ class HomeFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.walletState.collectLatest { state ->
                 // Balance
-                binding.tvBalanceNns.text = "${formatNns(state.balance.value.satoshiToNns())} NNS"
-                binding.tvAddress.text = state.address
+                val balanceNns = state.balance.value.toDouble() / 100_000_000.0
+                binding.tvBalanceNns.text = "${formatNns(balanceNns)} NNS"
+                binding.tvAddress.text = state.addresses[state.activeAddressType] ?: "..."
 
                 // Pending
-                if (state.pendingBalance.value > 0) {
-                    binding.pendingRow.visible()
-                    binding.tvPending.text = "${formatNns(state.pendingBalance.value.satoshiToNns())} NNS"
+                val pendingNns = state.pendingBalance.value.toDouble() / 100_000_000.0
+                if (pendingNns > 0) {
+                    binding.pendingRow.visibility = View.VISIBLE
+                    binding.tvPending.text = "${formatNns(pendingNns)} NNS"
                 } else {
-                    binding.pendingRow.gone()
+                    binding.pendingRow.visibility = View.GONE
                 }
 
                 // Sync indicator
                 if (state.isSyncing) {
-                    binding.syncProgress.visible()
+                    binding.syncProgress.visibility = View.VISIBLE
                     binding.syncProgress.progress = state.syncProgress
                     binding.tvSyncStatus.text = getString(R.string.sync_progress, state.syncProgress)
                 } else {
-                    binding.syncProgress.gone()
+                    binding.syncProgress.visibility = View.GONE
                     binding.tvSyncStatus.text = getString(R.string.sync_done)
                 }
             }

@@ -28,7 +28,7 @@ class WalletRepository @Inject constructor(
 
     suspend fun loadWallet() = walletManager.loadWallet()
 
-    fun getReceiveAddress() = walletManager.getCurrentReceiveAddress()
+    fun getReceiveAddress() = walletManager.getReceiveAddress()
 
     fun getMnemonicWords() = walletManager.getMnemonicWords()
 }
@@ -44,50 +44,52 @@ class PriceRepository @Inject constructor(
      *
      * Update the URL to the actual Klingex ticker endpoint once confirmed.
      */
-    suspend fun getPrice(): Result<PriceData> = try {
-        // Try the most common exchange API patterns
-        val urls = listOf(
-            "https://klingex.io/api/v1/ticker?symbol=NNSUSDT",
-            "https://klingex.io/api/v1/market/ticker?pair=NNS-USDT",
-            "https://klingex.io/api/v2/ticker/NNS-USDT"
-        )
+    suspend fun getPrice(): Result<PriceData> {
+        try {
+            // Try the most common exchange API patterns
+            val urls = listOf(
+                "https://klingex.io/api/v1/ticker?symbol=NNSUSDT",
+                "https://klingex.io/api/v1/market/ticker?pair=NNS-USDT",
+                "https://klingex.io/api/v2/ticker/NNS-USDT"
+            )
 
-        var lastException: Exception = Exception("No endpoints responded")
-        for (url in urls) {
-            try {
-                val request = Request.Builder().url(url).build()
-                val response = okHttpClient.newCall(request).execute()
-                if (response.isSuccessful) {
-                    val body = response.body?.string() ?: continue
-                    val json = JSONObject(body)
-                    val price = json.optString("last", "0").toDoubleOrNull()
-                        ?: json.optString("price", "0").toDoubleOrNull()
-                        ?: json.optString("lastPrice", "0").toDoubleOrNull()
-                        ?: 0.0
-                    val change = json.optString("changePercent", "0").toDoubleOrNull()
-                        ?: json.optString("priceChangePercent", "0").toDoubleOrNull()
-                        ?: 0.0
-                    val high = json.optString("high", "0").toDoubleOrNull() ?: 0.0
-                    val low = json.optString("low", "0").toDoubleOrNull() ?: 0.0
-                    val vol = json.optString("volume", "0").toDoubleOrNull() ?: 0.0
+            var lastException: Exception = Exception("No endpoints responded")
+            for (url in urls) {
+                try {
+                    val request = Request.Builder().url(url).build()
+                    val response = okHttpClient.newCall(request).execute()
+                    if (response.isSuccessful) {
+                        val body = response.body?.string() ?: continue
+                        val json = JSONObject(body)
+                        val price = json.optString("last", "0").toDoubleOrNull()
+                            ?: json.optString("price", "0").toDoubleOrNull()
+                            ?: json.optString("lastPrice", "0").toDoubleOrNull()
+                            ?: 0.0
+                        val change = json.optString("changePercent", "0").toDoubleOrNull()
+                            ?: json.optString("priceChangePercent", "0").toDoubleOrNull()
+                            ?: 0.0
+                        val high = json.optString("high", "0").toDoubleOrNull() ?: 0.0
+                        val low = json.optString("low", "0").toDoubleOrNull() ?: 0.0
+                        val vol = json.optString("volume", "0").toDoubleOrNull() ?: 0.0
 
-                    return Result.success(
-                        PriceData(
-                            priceUsd = price,
-                            change24hPercent = change,
-                            high24h = high,
-                            low24h = low,
-                            volume24h = vol
+                        return Result.success(
+                            PriceData(
+                                priceUsd = price,
+                                change24hPercent = change,
+                                high24h = high,
+                                low24h = low,
+                                volume24h = vol
+                            )
                         )
-                    )
+                    }
+                } catch (e: Exception) {
+                    lastException = e
                 }
-            } catch (e: Exception) {
-                lastException = e
             }
+            return Result.failure(lastException)
+        } catch (e: Exception) {
+            return Result.failure(e)
         }
-        Result.failure(lastException)
-    } catch (e: Exception) {
-        Result.failure(e)
     }
 
     /**

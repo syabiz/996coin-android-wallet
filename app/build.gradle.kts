@@ -10,6 +10,9 @@ android {
     namespace = "com.coin996.wallet"
     compileSdk = 35
 
+    // Fitur generateLocaleConfig dinonaktifkan sementara untuk menjaga stabilitas build
+    // Jika dibutuhkan di masa depan, pastikan file resources.properties tersedia.
+
     defaultConfig {
         applicationId = "com.coin996.wallet"
         minSdk = 26
@@ -55,11 +58,9 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    // Migrasi dari kotlinOptions (deprecated) ke compilerOptions
-    kotlin {
-        compilerOptions {
-            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
-        }
+    @Suppress("DEPRECATION")
+    kotlinOptions {
+        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -82,7 +83,7 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring("com.android.tools:desugar_jdk_libs:2.1.5")
+    coreLibraryDesugaring(libs.android.desugarJdkLibs)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

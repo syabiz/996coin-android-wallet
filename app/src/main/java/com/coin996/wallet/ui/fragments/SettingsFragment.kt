@@ -56,7 +56,7 @@ class SettingsFragment : Fragment() {
             securePreferences.setBiometricEnabled(isChecked)
         }
 
-        binding.rowChangePIn.setOnClickListener {
+        binding.rowChangePin.setOnClickListener {
             // TODO: navigate to change PIN flow
             requireContext().let { ctx ->
                 MaterialAlertDialogBuilder(ctx)
