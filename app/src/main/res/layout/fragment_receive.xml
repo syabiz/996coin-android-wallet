@@ -23,43 +23,38 @@
             android:textColor="@color/text_primary"
             android:layout_marginBottom="4dp" />
 
-        <!-- Address Type Selection (Horizontal Scrollable) -->
-        <HorizontalScrollView
-            android:layout_width="match_parent"
+        <!-- Address Type Selection (Centered Chips) -->
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chip_group_address_type"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:layout_marginBottom="8dp">
+            android:layout_marginBottom="12dp"
+            android:layout_gravity="center_horizontal"
+            app:singleSelection="true"
+            app:selectionRequired="true"
+            app:checkedChip="@+id/chip_legacy">
 
-            <com.google.android.material.chip.ChipGroup
-                android:id="@+id/chip_group_address_type"
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_legacy"
+                style="@style/Widget.Material3.Chip.Filter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:singleSelection="true"
-                app:selectionRequired="true"
-                app:checkedChip="@+id/chip_legacy">
+                android:text="Legacy" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_legacy"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Legacy (N)" />
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_native_segwit"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Native" />
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_nested_segwit"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Nested (8)" />
-
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip_native_segwit"
-                    style="@style/Widget.Material3.Chip.Filter"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Native (996)" />
-            </com.google.android.material.chip.ChipGroup>
-        </HorizontalScrollView>
+            <com.google.android.material.chip.Chip
+                android:id="@+id/chip_nested_segwit"
+                style="@style/Widget.Material3.Chip.Filter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nested" />
+        </com.google.android.material.chip.ChipGroup>
 
         <!-- Deskripsi tipe alamat -->
         <TextView

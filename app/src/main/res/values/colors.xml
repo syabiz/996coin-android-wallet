@@ -33,8 +33,8 @@
     <!-- Button colors -->
     <color name="button_active">#f4d247</color>
     <color name="button_inactive">#E60A2134</color>
-    <color name="text_button_active">#081928</color>
-    <color name="text_button_inactive">#f5f7fa</color>
+    <color name="text_button_active">#FFFFFF</color>
+    <color name="text_button_inactive">#FFFFFF</color>
 
     <!-- Divider -->
     <color name="divider">#0A2134</color>

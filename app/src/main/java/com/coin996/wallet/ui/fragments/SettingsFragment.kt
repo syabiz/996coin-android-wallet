@@ -57,13 +57,10 @@ class SettingsFragment : Fragment() {
         }
 
         binding.rowChangePin.setOnClickListener {
-            // TODO: navigate to change PIN flow
-            requireContext().let { ctx ->
-                MaterialAlertDialogBuilder(ctx)
-                    .setTitle("Change PIN")
-                    .setMessage("PIN change flow will be implemented here.")
-                    .setPositiveButton("OK", null)
-                    .show()
+            showPinDialog {
+                val bundle = Bundle().apply { putBoolean("is_change_pin", true) }
+                androidx.navigation.fragment.NavHostFragment.findNavController(this)
+                    .navigate(R.id.setPinFragment, bundle)
             }
         }
 
@@ -92,6 +89,12 @@ class SettingsFragment : Fragment() {
             showPinDialog {
                 showSeedWords()
             }
+        }
+
+        binding.rowGithub.setOnClickListener {
+            val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, 
+                android.net.Uri.parse("https://github.com/996coin/996coin"))
+            startActivity(intent)
         }
     }
 

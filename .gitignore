@@ -1,6 +1,10 @@
 # Android/Gradle
 .gradle/
+# Ignores the build folder, but does not load the APK file to keep it uploaded
 build/
+!**/build/outputs/apk/
+!**/build/outputs/bundle/
+
 local.properties
 *.iml
 .idea/

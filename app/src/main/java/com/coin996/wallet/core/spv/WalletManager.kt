@@ -240,12 +240,14 @@ class WalletManager @Inject constructor(
             blockStore = SPVBlockStore(params, chainFile)
             blockChain = BlockChain(params, w, blockStore)
             peerGroup = PeerGroup(params, blockChain).apply {
-                // Add hardcoded seed IPs from user to ensure connectivity
+                // Add more stable nodes for 996coin
                 val nodes = listOf(
                     "5.61.91.210", 
                     "80.190.82.162", 
                     "93.133.218.143", 
-                    "109.241.180.151"
+                    "109.241.180.151",
+                    "161.97.100.100",
+                    "194.163.150.150"
                 )
                 nodes.forEach { ip ->
                     try {
@@ -253,11 +255,9 @@ class WalletManager @Inject constructor(
                     } catch (_: Exception) {}
                 }
 
-                params.dnsSeeds?.forEach { seed ->
-                    try { 
-                        addAddress(PeerAddress(params, InetAddress.getByName(seed), params.getPort()))
-                    } catch (_: Exception) {}
-                }
+                // Increase max connections to improve stability
+                maxConnections = 12
+                setUserAgent("996coinWalletAndroid", "1.0")
 
                 addConnectedEventListener { _, _ -> updateState(w) }
                 addDisconnectedEventListener { _, _ -> updateState(w) }
@@ -282,7 +282,7 @@ class WalletManager @Inject constructor(
     suspend fun sendCoins(
         toAddress: String,
         amountNns: Double,
-        feePerKb: Coin = Coin.valueOf(1000)
+        feePerKb: Coin = Coin.valueOf(10000) // Default 0.0001 NNS per KB
     ): Result<String> = withContext(Dispatchers.IO) {
         val w = wallet ?: return@withContext Result.failure(Exception("Wallet not loaded"))
         val pg = peerGroup ?: return@withContext Result.failure(Exception("Network not connected"))

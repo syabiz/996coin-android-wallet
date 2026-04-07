@@ -62,6 +62,10 @@
         android:name="com.coin996.wallet.ui.fragments.setup.SetPinFragment"
         android:label="Set PIN"
         tools:layout="@layout/fragment_set_pin">
+        <argument
+            android:name="is_change_pin"
+            app:argType="boolean"
+            android:defaultValue="false" />
         <action android:id="@+id/action_setPin_to_complete"
             app:destination="@id/setupCompleteFragment"/>
     </fragment>

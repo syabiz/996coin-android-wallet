@@ -86,9 +86,10 @@
 
     <!-- Bottom Navigation -->
     <style name="Widget.996Wallet.BottomNav" parent="Widget.Material3.BottomNavigationView">
-        <item name="itemIconTint">@color/primary</item>
-        <item name="itemTextColor">@color/text_secondary</item>
+        <item name="itemIconTint">@color/nav_item_color</item>
+        <item name="itemTextColor">@color/nav_item_color</item>
         <item name="android:background">@color/surface</item>
+        <item name="labelVisibilityMode">labeled</item>
     </style>
 
 </resources>

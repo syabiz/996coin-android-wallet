@@ -46,11 +46,12 @@ class PriceRepository @Inject constructor(
      */
     suspend fun getPrice(): Result<PriceData> {
         try {
-            // Using official KlingEx API Base URL found in documentation
+            // Using a more reliable ticker endpoint for KlingEx
             val url = "https://api.klingex.io/api/v1/market/ticker?market=NNS_USDT"
             
             val request = Request.Builder()
                 .url(url)
+                .header("Accept", "application/json")
                 .header("X-KLINGEX-API-KEY", "02981d03ea2cad4d172fff9455741e8c538198d8bebea02437e0a9cfd642e9a5")
                 .build()
             val response = okHttpClient.newCall(request).execute()
@@ -59,15 +60,18 @@ class PriceRepository @Inject constructor(
                 val body = response.body?.string() ?: return Result.failure(Exception("Empty body"))
                 val json = JSONObject(body)
                 
-                // KlingEx API usually wraps data in a 'data' or 'result' object
-                val data = json.optJSONObject("data") ?: json
+                // KlingEx usually returns { "code": 0, "data": { ... } } or just { ... }
+                val data = if (json.has("data")) json.getJSONObject("data") else json
                 
                 val price = data.optString("last", "0").toDoubleOrNull()
                     ?: data.optString("price", "0").toDoubleOrNull()
                     ?: 0.0
-                val change = data.optString("change", "0").toDoubleOrNull()
+                
+                // Some APIs use 'change' for absolute and 'changePercent' for percentage
+                val change = data.optString("changePercent", "0").toDoubleOrNull()
                     ?: data.optString("priceChangePercent", "0").toDoubleOrNull()
                     ?: 0.0
+                
                 val high = data.optString("high", "0").toDoubleOrNull() ?: 0.0
                 val low = data.optString("low", "0").toDoubleOrNull() ?: 0.0
                 val vol = data.optString("volume", "0").toDoubleOrNull() ?: 0.0
@@ -93,20 +97,28 @@ class PriceRepository @Inject constructor(
      * Returns list of (timestamp, close) pairs.
      */
     suspend fun getPriceHistory(): Result<List<Pair<Long, Double>>> = try {
-        // Updated historical endpoint based on standard KlingEx patterns
+        // Updated historical endpoint to use 1h interval
         val url = "https://api.klingex.io/api/v1/market/kline?market=NNS_USDT&interval=1h&limit=24"
         val request = Request.Builder()
             .url(url)
+            .header("Accept", "application/json")
             .header("X-KLINGEX-API-KEY", "02981d03ea2cad4d172fff9455741e8c538198d8bebea02437e0a9cfd642e9a5")
             .build()
         val response = okHttpClient.newCall(request).execute()
         if (response.isSuccessful) {
             val body = response.body?.string() ?: "{}"
             val json = JSONObject(body)
-            val dataArray = json.optJSONArray("data") ?: org.json.JSONArray()
+            // Handle different JSON structures for kline
+            val dataArray = when {
+                json.has("data") -> json.getJSONArray("data")
+                json.has("result") -> json.getJSONArray("result")
+                else -> org.json.JSONArray(body)
+            }
+            
             val result = mutableListOf<Pair<Long, Double>>()
             for (i in 0 until dataArray.length()) {
                 val candle = dataArray.getJSONArray(i)
+                // KlingEx format: [timestamp, open, high, low, close, volume]
                 val ts = candle.getLong(0)
                 val close = candle.optString(4, "0").toDoubleOrNull() ?: continue
                 result.add(Pair(ts, close))

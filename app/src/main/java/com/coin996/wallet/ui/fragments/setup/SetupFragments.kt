@@ -76,6 +76,7 @@ class ImportWifFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 binding.btnImport.isEnabled = !s.isNullOrBlank()
+                binding.tvWifError.visibility = View.GONE
             }
         })
 
@@ -132,7 +133,7 @@ class ImportWifFragment : Fragment() {
 
     private fun copy(text: String) {
         if (text.isEmpty()) return
-        requireContext().copyToClipboard("996coin Address", text)
+        context?.copyToClipboard("996coin Address", text)
     }
 
     override fun onDestroyView() { super.onDestroyView(); _binding = null }
@@ -207,8 +208,15 @@ class SetPinFragment : Fragment() {
                     binding.loadingContainer.visibility = View.VISIBLE
                     walletManager.encryptWallet(enteredPin)
                     securePreferences.savePin(enteredPin)
-                    securePreferences.setWalletSetup(true)
-                    findNavController().navigate(R.id.action_setPin_to_complete)
+                    
+                    val isChangePin = arguments?.getBoolean("is_change_pin", false) ?: false
+                    if (isChangePin) {
+                        android.widget.Toast.makeText(requireContext(), "PIN changed successfully", android.widget.Toast.LENGTH_SHORT).show()
+                        findNavController().popBackStack()
+                    } else {
+                        securePreferences.setWalletSetup(true)
+                        findNavController().navigate(R.id.action_setPin_to_complete)
+                    }
                 }
             } else {
                 pin.setLength(0)

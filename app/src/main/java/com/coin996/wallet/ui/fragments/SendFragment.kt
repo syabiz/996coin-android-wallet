@@ -78,8 +78,8 @@ class SendFragment : Fragment() {
         // MAX button
         binding.tilAmount.setEndIconOnClickListener {
             val balance = viewModel.walletState.value.balance.value
-            // Estimasi fee yang lebih aman (0.0005 NNS) untuk transaksi rata-rata
-            val estimatedFee = 50_000L 
+            // Menggunakan default fee 0.0001 NNS (10,000 satoshi)
+            val estimatedFee = 10_000L
             val maxAmount = (balance - estimatedFee).coerceAtLeast(0).satoshiToNns()
             binding.etAmount.setText(if (maxAmount > 0) String.format("%.8f", maxAmount) else "0")
         }

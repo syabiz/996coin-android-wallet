@@ -227,34 +227,19 @@ This app makes network connections to:
 git clone https://github.com/syabiz/996coin-wallet.git
 cd 996coin-wallet
 
-# 2. Copy local.properties template
-cp local.properties.template local.properties
-# Edit local.properties — set your Android SDK path:
-# sdk.dir=/path/to/your/Android/sdk
-
-# 3. Add required assets (see notes below)
+# 2. Add required assets (see notes below)
 #    - res/font/nunito_regular.ttf, nunito_semibold.ttf, nunito_bold.ttf
 #    - res/mipmap-*/ic_launcher.png and ic_launcher_round.png
 #    - res/raw/success_animation.json (Lottie)
 
-# 4. Build debug APK
+# 3. Build debug APK
 ./gradlew assembleDebug
 
-# 5. Or build release APK (requires signing config)
+# 4. Or build release APK (requires signing config)
 ./gradlew assembleRelease
 ```
 
 > **Verify your build:** After building, you can compare the APK's SHA-256 hash against the hash published in each [GitHub Release](https://github.com/syabiz/996coin-wallet/releases).
-
-### Assets Not Included in This Repo
-
-The following assets are **not committed** to this repository because they are either proprietary or must be obtained from their original source:
-
-| Asset | Where to get it | Destination |
-|---|---|---|
-| Nunito font (Regular/SemiBold/Bold) | [fonts.google.com/specimen/Nunito](https://fonts.google.com/specimen/Nunito) | `app/src/main/res/font/` |
-| App icon (`ic_launcher.png`) | Your own design | `app/src/main/res/mipmap-*/` |
-| Lottie success animation | [lottiefiles.com](https://lottiefiles.com/search?q=success+checkmark) | `app/src/main/res/raw/success_animation.json` |
 
 ---
 
@@ -263,45 +248,22 @@ The following assets are **not committed** to this repository because they are e
 This section explains the complete lifecycle of your private key, so you can verify the code yourself.
 
 ### 1. Key Generation
-```
-WalletManager.createNewWallet()
-  └── DeterministicSeed(SecureRandom, ...)   ← OS-level cryptographic RNG
-        └── Wallet.fromSeed(params, seed)    ← BIP-32 HD wallet derivation
-```
 The seed is generated **entirely on-device** using `java.security.SecureRandom`. It is never transmitted anywhere.
 
 ### 2. Seed Display
-```
-SetupFragments.kt → CreateWalletFragment
-  └── viewModel.generatedWords               ← displayed once on screen
-```
 After the user confirms they have written down the words, **the raw mnemonic is no longer displayed**. It remains accessible only via `Settings → Show Recovery Phrase` (requires PIN).
 
 ### 3. Key Storage
-```
-WalletManager.saveWallet()
-  └── WalletProtobufSerializer().writeWallet(wallet, FileOutputStream("996coin.wallet"))
-```
 The wallet file is stored in the app's **private internal storage** (`/data/data/com.coin996.wallet/files/`), which is:
 - Not accessible by other apps (Android sandbox)
 - Not included in cloud backups (see `backup_rules.xml`)
-- Optionally encrypted with your PIN via `wallet.encrypt(password)`
+- Encrypted with your PIN via `wallet.encrypt(password)`
 
 ### 4. Signing
-```
-WalletManager.sendCoins()
-  └── wallet.sendCoins(peerGroup, SendRequest)
-        └── bitcoinj signs the transaction locally
-              └── broadcast to P2P network
-```
 Signing happens **locally**. The signed transaction (not the key) is broadcast to the network.
 
 ### 5. PIN / Encryption
-```
-SecurePreferences.savePin()
-  └── EncryptedSharedPreferences (AES-256-GCM)
-        └── Backed by Android Keystore (hardware-backed on supported devices)
-```
+Stored using `EncryptedSharedPreferences` (AES-256-GCM), which is backed by the Android Keystore (hardware-backed on supported devices).
 
 ---
 
@@ -333,7 +295,6 @@ All permissions are declared in `AndroidManifest.xml`. Here is what each one is 
 - **Price data depends on Klingex.** If Klingex is unavailable, price display will fail gracefully. Wallet functions (send/receive) are unaffected.
 - **Initial sync takes time.** The first blockchain sync can take several minutes depending on network conditions.
 - **PoS staking is not supported** in this wallet. For staking, use the official Qt desktop wallet.
-- **DNS seeds must be reachable.** If `seed*.996coin.com` entries are not configured, peer discovery may fail. Add manual peer IPs via settings (planned feature).
 
 ---
 
@@ -345,23 +306,6 @@ Contributions are welcome! Please follow these guidelines:
 2. **Create** a feature branch: `git checkout -b feature/your-feature-name`
 3. **Commit** your changes with a clear message
 4. **Open a Pull Request** with a description of what changed and why
-
-### Reporting Security Issues
-
-If you discover a security vulnerability, **please do not open a public GitHub Issue.**
-
-Instead, report it privately by:
-- Opening a [GitHub Security Advisory](https://github.com/syabiz/996coin-wallet/security/advisories/new)
-- Or emailing the maintainer directly (see GitHub profile)
-
-We will acknowledge the report within 48 hours and aim to release a fix within 14 days for critical issues.
-
-### Code Style
-
-- Follow **Kotlin coding conventions**
-- Use **ViewBinding** (no `findViewById`)
-- All network calls must go through the **Repository layer**
-- No private keys or seeds in **logs** (`BuildConfig.DEBUG` guards already in place)
 
 ---
 
@@ -391,8 +335,6 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 ```
 
-This project builds on [bitcoinj](https://github.com/bitcoinj/bitcoinj) (Apache 2.0) and [996-Coin](https://github.com/Imusing/996-Coin) (MIT).
-
 ---
 
 ## Disclaimer
@@ -404,12 +346,11 @@ This project builds on [bitcoinj](https://github.com/bitcoinj/bitcoinj) (Apache 
 > - Never share your seed phrase or PIN with anyone
 > - Never store your seed phrase digitally (photos, cloud notes, email)
 > - Test with small amounts before using significant funds
-> - Keep your Android device updated and secure
 
 ---
 
 <p align="center">
   Built with ❤️ for the 996coin community &nbsp;|&nbsp;
   <a href="https://996coin.com">996coin.com</a> &nbsp;|&nbsp;
-  <a href="https://klingex.io/register?ref=B68D1568">Trade NNS on Klingex</a>
+  <a href="https://klingex.io">Klingex Exchange</a>
 </p>
