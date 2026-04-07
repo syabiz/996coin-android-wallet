@@ -355,10 +355,10 @@ If this tool has been helpful to you, perhaps there's a reward of a cup of coffe
 
 | Network | Address |
 |---|---|
-| <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="20"/> 996coin (NNS) | `NP7XNyC2ZocNPjtKfmRqfsqvyTpeQK4rAE` |
-| ₿ Bitcoin (BTC) | `bc1qn6t8hy8memjfzp4y3sh6fvadjdtqj64vfvlx58` |
-| ⟠ Ethereum (ETH) | `0x512936ca43829C8f71017aE47460820Fe703CAea` |
-| ◎ Solana (SOL) | `6ZZrRmeGWMZSmBnQFWXG2UJauqbEgZnwb4Ly9vLYr7mi` |
+| <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" width="16"/> 996coin (NNS) | `NP7XNyC2ZocNPjtKfmRqfsqvyTpeQK4rAE` |
+| <img src="https://assets.coingecko.com/coins/images/1/standard/bitcoin.png" width="16"/> Bitcoin (BTC) | `bc1qn6t8hy8memjfzp4y3sh6fvadjdtqj64vfvlx58` |
+| <img src="https://assets.coingecko.com/coins/images/279/standard/ethereum.png" width="16"/> Ethereum (ETH) | `0x512936ca43829C8f71017aE47460820Fe703CAea` |
+| <img src="https://assets.coingecko.com/coins/images/4128/standard/solana.png" width="16"/> Solana (SOL) | `6ZZrRmeGWMZSmBnQFWXG2UJauqbEgZnwb4Ly9vLYr7mi` |
 
 Every bit of support is deeply appreciated! 🙏
 
