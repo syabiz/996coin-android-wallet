@@ -67,16 +67,9 @@ class SettingsFragment : Fragment() {
             }
         }
 
-        binding.rowShowSeed.setOnClickListener {
-            // Show seed words behind PIN confirmation
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Show Recovery Phrase")
-                .setMessage("⚠️ Never share your recovery phrase with anyone.\n\nMake sure no one is watching your screen.")
-                .setPositiveButton("Show") { _, _ ->
-                    showSeedWords()
-                }
-                .setNegativeButton(R.string.btn_cancel, null)
-                .show()
+        binding.rowImportWif.setOnClickListener {
+            androidx.navigation.fragment.NavHostFragment.findNavController(this)
+                .navigate(R.id.action_settings_to_importWif)
         }
 
         binding.rowRescan.setOnClickListener {
@@ -112,7 +105,7 @@ class SettingsFragment : Fragment() {
     private fun observeViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.walletState.collectLatest { state ->
-                // peer count from SPV
+                binding.tvPeerCount.text = "${state.peerCount} peers"
             }
         }
     }

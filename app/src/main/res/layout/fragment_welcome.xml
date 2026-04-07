@@ -6,14 +6,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@drawable/bg_wallet_card">
+    android:background="@color/background_dark">
 
     <View android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"/>
 
     <ImageView
-        android:layout_width="88dp"
-        android:layout_height="88dp"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:src="@mipmap/ic_launcher"
+        android:contentDescription="@string/app_name" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,7 +23,7 @@
         android:text="@string/setup_welcome"
         android:textSize="28sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:gravity="center"
         android:lineSpacingMultiplier="1.2" />
 
@@ -33,7 +34,8 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:text="@string/app_tagline"
-        android:textColor="#CCFFFFFF"
+        android:textColor="@color/text_primary"
+        android:alpha="0.8"
         android:textSize="15sp"
         android:gravity="center" />
 
@@ -47,53 +49,38 @@
         android:paddingEnd="28dp"
         android:paddingBottom="44dp">
 
-        <!-- Buat wallet baru (HD mnemonic) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_create_wallet"
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:text="@string/setup_create"
-            android:textColor="@color/primary"
-            android:backgroundTint="#FFFFFF"
+            android:text="@string/setup_create_address"
+            android:textColor="@color/text_button_active"
+            android:backgroundTint="@color/button_active"
             app:cornerRadius="14dp"
             android:textSize="15sp"
             android:textStyle="bold" />
 
-        <!-- Restore dari mnemonic -->
         <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.OutlinedButton"
-            android:id="@+id/btn_restore_wallet"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="12dp"
-            android:text="@string/setup_restore"
-            android:textColor="#FFFFFF"
-            app:strokeColor="#AAFFFFFF"
-            app:cornerRadius="14dp"
-            android:textSize="15sp" />
-
-        <!-- Import WIF private key dari wallet Qt -->
-        <com.google.android.material.button.MaterialButton
-            style="@style/Widget.Material3.Button.OutlinedButton"
             android:id="@+id/btn_import_wif"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            android:layout_marginTop="10dp"
-            android:text="Import Private Key (WIF)"
-            android:textColor="#FFDD88"
-            app:strokeColor="#AADD88"
+            android:layout_height="56dp"
+            android:layout_marginTop="12dp"
+            android:text="@string/setup_import_wif_btn"
+            android:textColor="@color/text_primary"
+            android:backgroundTint="@color/button_inactive"
             app:cornerRadius="14dp"
-            android:textSize="15sp" />
+            android:textSize="15sp"
+            android:textStyle="bold" />
 
-        <!-- Keterangan WIF -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="16dp"
             android:layout_gravity="center"
-            android:text="Punya wallet Qt 996coin? Gunakan Import Private Key"
-            android:textColor="#AAFFFFFF"
-            android:textSize="12sp"
+            android:text="@string/setup_import_wif_desc"
+            android:textColor="@color/text_primary"
+            android:alpha="0.7"
+            android:textSize="13sp"
             android:gravity="center" />
 
     </LinearLayout>

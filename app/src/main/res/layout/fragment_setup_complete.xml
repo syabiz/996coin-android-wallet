@@ -39,7 +39,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:background="@drawable/bg_card_rounded"
+        android:background="@drawable/bg_pill_orange"
         android:padding="16dp"
         android:layout_marginTop="32dp">
 
@@ -52,7 +52,7 @@
             android:textColor="@color/text_primary" android:textSize="14sp"
             android:layout_marginBottom="8dp" />
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-            android:text="✅  Recovery phrase safely stored"
+            android:text="✅  Private key safely imported"
             android:textColor="@color/text_primary" android:textSize="14sp" />
     </LinearLayout>
 

@@ -1,49 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- 996coin brand colors -->
-    <color name="primary">#FF6B00</color>        <!-- Deep orange — energy of "996" work culture flipped positive -->
-    <color name="primary_dark">#CC5500</color>
-    <color name="primary_light">#FF9A4D</color>
-    <color name="on_primary">#FFFFFF</color>
+    <!-- 996coin brand colors (Updated) -->
+    <color name="primary">#f4d247</color>
+    <color name="primary_dark">#d4b63d</color>
+    <color name="primary_light">#ffeb85</color>
+    <color name="on_primary">#081928</color>
 
-    <color name="secondary">#1A1A2E</color>       <!-- Deep navy for contrast -->
-    <color name="secondary_variant">#16213E</color>
-    <color name="on_secondary">#FFFFFF</color>
+    <color name="secondary">#f4d247</color>
+    <color name="secondary_variant">#d4b63d</color>
+    <color name="on_secondary">#081928</color>
 
-    <color name="accent">#FFD700</color>          <!-- Gold — coin -->
-    <color name="accent_green">#00C896</color>    <!-- Positive / received -->
-    <color name="accent_red">#FF4560</color>      <!-- Negative / sent -->
+    <color name="accent">#f4d247</color>
+    <color name="accent_green">#4CAF50</color>
+    <color name="accent_red">#F44336</color>
 
     <!-- Background -->
-    <color name="background">#F5F6FA</color>
-    <color name="background_card">#FFFFFF</color>
-    <color name="background_dark">#1A1A2E</color>
+    <color name="background">#E0081928</color>
+    <color name="background_card">#E60A2134</color>
+    <color name="background_dark">#081928</color>
 
     <!-- Surface -->
-    <color name="surface">#FFFFFF</color>
-    <color name="surface_variant">#F0F0F5</color>
+    <color name="surface">#E60A2134</color>
+    <color name="surface_variant">#0A2134</color>
 
     <!-- Text -->
-    <color name="text_primary">#1A1A2E</color>
-    <color name="text_secondary">#6B7280</color>
-    <color name="text_hint">#9CA3AF</color>
-    <color name="text_on_dark">#FFFFFF</color>
+    <color name="text_primary">#f5f7fa</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_hint">#757575</color>
+    <color name="text_on_dark">#f5f7fa</color>
+    <color name="text_accent">#f4d247</color>
+
+    <!-- Button colors -->
+    <color name="button_active">#f4d247</color>
+    <color name="button_inactive">#E60A2134</color>
+    <color name="text_button_active">#081928</color>
+    <color name="text_button_inactive">#f5f7fa</color>
 
     <!-- Divider -->
-    <color name="divider">#E5E7EB</color>
+    <color name="divider">#0A2134</color>
 
-    <!-- Gradient start/end for wallet card -->
-    <color name="gradient_start">#FF6B00</color>
-    <color name="gradient_end">#FF3D00</color>
+    <!-- Gradient for wallet card -->
+    <color name="gradient_start">#f4d247</color>
+    <color name="gradient_end">#d4b63d</color>
 
     <!-- Status bar -->
-    <color name="status_bar">#CC5500</color>
+    <color name="status_bar">#081928</color>
 
     <!-- Sync colors -->
-    <color name="sync_active">#00C896</color>
-    <color name="sync_inactive">#9CA3AF</color>
+    <color name="sync_active">#4CAF50</color>
+    <color name="sync_inactive">#B0B0B0</color>
 
     <!-- Chart -->
-    <color name="chart_line">#FF6B00</color>
-    <color name="chart_fill">#33FF6B00</color>
+    <color name="chart_line">#f4d247</color>
+    <color name="chart_fill">#33f4d247</color>
 </resources>

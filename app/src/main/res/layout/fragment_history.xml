@@ -41,7 +41,7 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="All"
+            android:text="@string/history_filter_all"
             android:checked="true" />
 
         <com.google.android.material.chip.Chip
@@ -49,21 +49,21 @@
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Received" />
+            android:text="@string/history_filter_received" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_sent"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sent" />
+            android:text="@string/history_filter_sent" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_pending"
             style="@style/Widget.Material3.Chip.Filter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pending" />
+            android:text="@string/history_filter_pending" />
     </com.google.android.material.chip.ChipGroup>
 
     <!-- Transaction list -->
@@ -114,7 +114,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:text="Send or receive NNS to see transactions here"
+            android:text="@string/history_empty_desc"
             android:textColor="@color/text_hint"
             android:textSize="13sp"
             android:gravity="center" />

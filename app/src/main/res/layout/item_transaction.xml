@@ -71,7 +71,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="Pending"
+                    android:text="@string/tx_pending"
                     android:textSize="10sp"
                     android:textColor="@color/primary"
                     android:background="@drawable/bg_pill_orange"

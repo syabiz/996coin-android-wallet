@@ -16,7 +16,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Import Private Key (WIF)"
+            android:text="@string/setup_import_wif_title"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@color/text_primary"
@@ -36,8 +36,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Gunakan private key WIF dari wallet Qt 996coin.\n\nDi wallet Qt: Pilih alamat → kanan klik → Copy Private Key.\n\nSatu private key akan menghasilkan 3 alamat (Legacy, Nested SegWit, Native SegWit)."
-                android:textColor="#7A4A00"
+                android:text="@string/setup_import_wif_desc"
+                android:textColor="#FFFFFF"
                 android:textSize="13sp"
                 android:lineSpacingMultiplier="1.35" />
         </LinearLayout>
@@ -48,7 +48,7 @@
             style="@style/Widget.996Wallet.TextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="WIF Private Key"
+            android:hint="@string/setup_import_wif_hint"
             app:endIconMode="custom"
             app:endIconDrawable="@drawable/ic_qr_scan"
             app:endIconContentDescription="Scan QR">
@@ -71,7 +71,7 @@
             android:visibility="gone"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="?attr/colorSurface">
+            app:cardBackgroundColor="@color/button_inactive">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -82,7 +82,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Alamat yang ter-derive:"
+                    android:text="Derived Addresses:"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary"
@@ -92,7 +92,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Legacy (P2PKH) — dimulai N"
+                    android:text="Legacy (P2PKH) — starts with N"
                     android:textSize="11sp"
                     android:textColor="@color/text_secondary" />
                 <LinearLayout
@@ -123,7 +123,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nested SegWit (P2SH-P2WPKH)"
+                    android:text="Nested SegWit (P2SH-P2WPKH) — starts with 8"
                     android:textSize="11sp"
                     android:textColor="@color/text_secondary" />
                 <LinearLayout
@@ -205,7 +205,7 @@
             <ProgressBar android:layout_width="24dp" android:layout_height="24dp"
                 android:layout_marginEnd="10dp"/>
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                android:text="Mengimpor key dan scanning blockchain…"
+                android:text="Importing key and scanning blockchain…"
                 android:textColor="@color/text_secondary" android:textSize="14sp"/>
         </LinearLayout>
 
@@ -219,15 +219,14 @@
             android:text="Import Key"
             android:enabled="false" />
 
-        <!-- Lanjut ke PIN (muncul setelah import berhasil) -->
+        <!-- Continue to PIN (appears after successful import) -->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_continue"
             style="@style/Widget.996Wallet.Button.Primary"
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:layout_marginTop="12dp"
-            android:text="Lanjut →"
+            android:text="Continue →"
             android:visibility="gone" />
-
     </LinearLayout>
 </ScrollView>

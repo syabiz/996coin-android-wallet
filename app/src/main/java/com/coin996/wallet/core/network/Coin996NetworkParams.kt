@@ -1,8 +1,10 @@
 package com.coin996.wallet.core.network
 
 import org.bitcoinj.core.*
+import org.bitcoinj.net.discovery.HttpDiscovery
 import org.bitcoinj.params.MainNetParams
 import org.bitcoinj.store.BlockStore
+import java.net.InetSocketAddress
 
 /**
  * 996coin Mainnet Network Parameters
@@ -19,6 +21,14 @@ class Coin996NetworkParams : MainNetParams() {
         packetMagic = 0x996c0133L
         port = 49969
         dnsSeeds = arrayOf("seed1.996coin.com", "seed2.996coin.com")
+        
+        // Hardcoded seeds from Explorer Peers to ensure sync
+        // We use PeerAddress to store static node IPs
+        addrSeeds = intArrayOf(
+            0x053D5BD2, // 5.61.91.210
+            0x50BE52A2, // 80.190.82.162
+            0x6DF1B497  // 109.241.180.151
+        )
         
         checkpoints[0] = Sha256Hash.wrap("48b00c93e8a20fb6b39f7d99b85066da2820cc3830ca223fc3e04d1a5b0dcbb7")
     }

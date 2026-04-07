@@ -9,6 +9,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.withContext
 import org.bitcoinj.core.*
+import org.bitcoinj.core.listeners.PeerConnectedEventListener
+import org.bitcoinj.core.listeners.PeerDisconnectedEventListener
 import org.bitcoinj.script.Script
 import org.bitcoinj.store.SPVBlockStore
 import org.bitcoinj.wallet.DeterministicSeed
@@ -39,7 +41,8 @@ data class WalletState(
     val addresses: Map<AddressType, String> = emptyMap(),
     val activeAddressType: AddressType      = AddressType.LEGACY,
     val blockHeight: Int       = 0,
-    val isWifImported: Boolean = false
+    val isWifImported: Boolean = false,
+    val peerCount: Int         = 0
 )
 
 data class TransactionItem(
@@ -86,14 +89,13 @@ class WalletManager @Inject constructor(
 
     private var activeType: AddressType = AddressType.LEGACY
 
-    suspend fun createNewWallet(): List<String> = withContext(Dispatchers.IO) {
-        val seed = DeterministicSeed(java.security.SecureRandom(), 128, "")
-        val w = Wallet.fromSeed(params, seed, Script.ScriptType.P2PKH)
+    suspend fun createNewWallet(): String? = withContext(Dispatchers.IO) {
+        val w = Wallet.createDeterministic(bjContext, Script.ScriptType.P2PKH)
         addSegWitWatching(w)
         saveWalletSync(w)
         wallet = w
         updateState(w)
-        seed.mnemonicCode ?: emptyList()
+        getReceiveAddress(AddressType.LEGACY)
     }
 
     suspend fun restoreFromMnemonic(
@@ -116,6 +118,8 @@ class WalletManager @Inject constructor(
         withContext(Dispatchers.IO) {
             try {
                 val key = DumpedPrivateKey.fromBase58(params, wifString.trim()).key
+                key.creationTimeSeconds = 0 // Set to 0 to trigger full rescan for this key
+
                 val legacyAddr = LegacyAddress.fromKey(params, key).toString()
                 val nativeAddr = SegwitAddress.fromKey(params, key, Script.ScriptType.P2WPKH).toString()
                 val p2wpkhScript = org.bitcoinj.script.ScriptBuilder.createP2WPKHOutputScript(key)
@@ -128,11 +132,19 @@ class WalletManager @Inject constructor(
                     Wallet.createDeterministic(bjContext, Script.ScriptType.P2PKH)
                 }
 
+                // Stop sync before modifying files
+                val wasSyncing = peerGroup?.isRunning == true
+                if (wasSyncing) stopSync()
+
                 w.importKey(key)
-                chainFile.delete()
+                if (chainFile.exists()) chainFile.delete()
+                
                 saveWalletSync(w)
                 wallet = w
                 updateState(w)
+
+                // Restart sync if it was running
+                if (wasSyncing) startSync()
 
                 WifImportResult.Success(legacyAddr, nestedAddr, nativeAddr)
             } catch (e: Exception) {
@@ -142,16 +154,16 @@ class WalletManager @Inject constructor(
 
     fun getReceiveAddress(type: AddressType = activeType): String? {
         val w = wallet ?: return null
+        // Prefer imported keys (WIF) over HD keys if they exist to match QT behavior
+        val key = w.importedKeys.firstOrNull() ?: w.currentReceiveKey()
         return try {
             when (type) {
-                AddressType.LEGACY -> w.currentReceiveAddress().toString()
+                AddressType.LEGACY -> LegacyAddress.fromKey(params, key).toString()
                 AddressType.NESTED_SEGWIT -> {
-                    val key = w.currentReceiveKey()
                     val script = org.bitcoinj.script.ScriptBuilder.createP2WPKHOutputScript(key)
                     LegacyAddress.fromScriptHash(params, Utils.sha256hash160(script.program)).toString()
                 }
                 AddressType.NATIVE_SEGWIT -> {
-                    val key = w.currentReceiveKey()
                     SegwitAddress.fromKey(params, key, Script.ScriptType.P2WPKH).toString()
                 }
             }
@@ -203,16 +215,32 @@ class WalletManager @Inject constructor(
     suspend fun startSync(progressListener: ((Int) -> Unit)? = null) =
         withContext(Dispatchers.IO) {
             val w = wallet ?: return@withContext
+            if (peerGroup != null && peerGroup!!.isRunning) return@withContext
+
             blockStore = SPVBlockStore(params, chainFile)
             blockChain = BlockChain(params, w, blockStore)
             peerGroup = PeerGroup(params, blockChain).apply {
-                setUserAgent("996coin-android", "1.0.0")
-                addWallet(w)
-                params.dnsSeeds?.forEach { seed ->
-                    try { 
-                        addAddress(PeerAddress(params, InetAddress.getByName(seed)))
+                // Add hardcoded seed IPs from user to ensure connectivity
+                val nodes = listOf(
+                    "5.61.91.210", 
+                    "80.190.82.162", 
+                    "93.133.218.143", 
+                    "109.241.180.151"
+                )
+                nodes.forEach { ip ->
+                    try {
+                        addAddress(PeerAddress(params, InetAddress.getByName(ip), params.getPort()))
                     } catch (_: Exception) {}
                 }
+
+                params.dnsSeeds?.forEach { seed ->
+                    try { 
+                        addAddress(PeerAddress(params, InetAddress.getByName(seed), params.getPort()))
+                    } catch (_: Exception) {}
+                }
+
+                addConnectedEventListener { _, _ -> updateState(w) }
+                addDisconnectedEventListener { _, _ -> updateState(w) }
             }
 
             peerGroup?.addBlocksDownloadedEventListener { _, _, _, blocksLeft ->
@@ -265,7 +293,8 @@ class WalletManager @Inject constructor(
             balance = w.getBalance(Wallet.BalanceType.AVAILABLE),
             pendingBalance = w.getBalance(Wallet.BalanceType.ESTIMATED).subtract(w.getBalance(Wallet.BalanceType.AVAILABLE)),
             addresses = getAllAddresses(), activeAddressType = activeType,
-            isWifImported = w.importedKeys.isNotEmpty()
+            isWifImported = w.importedKeys.isNotEmpty(),
+            peerCount = peerGroup?.connectedPeers?.size ?: 0
         )
         _transactions.value = w.getTransactionsByTime().map { tx ->
             val value = tx.getValue(w)

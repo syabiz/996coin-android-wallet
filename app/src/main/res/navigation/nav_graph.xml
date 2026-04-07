@@ -46,7 +46,10 @@
         android:id="@+id/settingsFragment"
         android:name="com.coin996.wallet.ui.fragments.SettingsFragment"
         android:label="@string/nav_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings">
+        <action android:id="@+id/action_settings_to_importWif"
+            app:destination="@id/importWifFragment"/>
+    </fragment>
 
     <!-- Setup nav graph (separate) -->
     <include app:graph="@navigation/nav_setup" />

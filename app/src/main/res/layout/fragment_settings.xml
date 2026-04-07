@@ -97,7 +97,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_backup"
+            android:text="BACKUP"
             android:textSize="12sp"
             android:textColor="@color/primary"
             android:textStyle="bold"
@@ -112,8 +112,9 @@
             app:cardElevation="2dp"
             app:cardBackgroundColor="?attr/colorSurface">
 
+            <!-- Import WIF (Qt Compatibility) -->
             <LinearLayout
-                android:id="@+id/row_show_seed"
+                android:id="@+id/row_import_wif"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:orientation="horizontal"
@@ -123,10 +124,10 @@
                 android:background="?attr/selectableItemBackground">
 
                 <ImageView android:layout_width="22dp" android:layout_height="22dp"
-                    android:src="@drawable/ic_key" android:tint="@color/text_secondary"
+                    android:src="@drawable/ic_qr_scan" android:tint="@color/text_secondary"
                     android:layout_marginEnd="14dp" />
                 <TextView android:layout_width="0dp" android:layout_height="wrap_content"
-                    android:layout_weight="1" android:text="@string/settings_show_seed"
+                    android:layout_weight="1" android:text="Import Private Key (WIF)"
                     android:textSize="15sp" android:textColor="@color/text_primary" />
                 <ImageView android:layout_width="18dp" android:layout_height="18dp"
                     android:src="@drawable/ic_chevron_right" android:tint="@color/text_hint" />

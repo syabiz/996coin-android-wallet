@@ -201,13 +201,13 @@ class HomeFragment : Fragment() {
         }
 
         val dataSet = LineDataSet(entries, "NNS/USDT").apply {
-            color = Color.parseColor("#FF6B00")
-            setCircleColor(Color.parseColor("#FF6B00"))
+            color = Color.parseColor("#00C0FA")
+            setCircleColor(Color.parseColor("#00C0FA"))
             circleRadius = 0f
             setDrawCircles(false)
             setDrawValues(false)
             lineWidth = 2f
-            fillColor = Color.parseColor("#33FF6B00")
+            fillColor = Color.parseColor("#3300C0FA")
             setDrawFilled(true)
             mode = LineDataSet.Mode.CUBIC_BEZIER
         }

@@ -23,37 +23,43 @@
             android:textColor="@color/text_primary"
             android:layout_marginBottom="4dp" />
 
-        <!-- Tab pilih jenis alamat -->
-        <com.google.android.material.chip.ChipGroup
-            android:id="@+id/chip_group_address_type"
+        <!-- Address Type Selection (Horizontal Scrollable) -->
+        <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
-            app:singleSelection="true"
-            app:selectionRequired="true">
+            android:scrollbars="none"
+            android:layout_marginBottom="8dp">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_legacy"
-                style="@style/Widget.Material3.Chip.Filter"
+            <com.google.android.material.chip.ChipGroup
+                android:id="@+id/chip_group_address_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Legacy"
-                android:checked="true" />
+                app:singleSelection="true"
+                app:selectionRequired="true"
+                app:checkedChip="@+id/chip_legacy">
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_nested_segwit"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nested SegWit" />
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_legacy"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Legacy (N)" />
 
-            <com.google.android.material.chip.Chip
-                android:id="@+id/chip_native_segwit"
-                style="@style/Widget.Material3.Chip.Filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Native SegWit" />
-        </com.google.android.material.chip.ChipGroup>
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_nested_segwit"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nested (8)" />
+
+                <com.google.android.material.chip.Chip
+                    android:id="@+id/chip_native_segwit"
+                    style="@style/Widget.Material3.Chip.Filter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Native (996)" />
+            </com.google.android.material.chip.ChipGroup>
+        </HorizontalScrollView>
 
         <!-- Deskripsi tipe alamat -->
         <TextView
@@ -103,7 +109,7 @@
             android:layout_marginTop="16dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="2dp"
-            app:cardBackgroundColor="?attr/colorSurface">
+            app:cardBackgroundColor="@color/button_inactive">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -161,13 +167,13 @@
                 app:icon="@drawable/ic_refresh" />
         </LinearLayout>
 
-        <!-- Request amount opsional -->
+        <!-- Request amount optional -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.996Wallet.TextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:hint="Minta jumlah NNS (opsional)"
+            android:hint="@string/receive_amount_hint"
             app:suffixText="NNS">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -183,7 +189,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
-            android:text="Update QR dengan Jumlah" />
+            android:text="@string/receive_update_qr" />
 
     </LinearLayout>
 </ScrollView>

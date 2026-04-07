@@ -157,11 +157,10 @@ class SetupViewModel @Inject constructor(
         viewModelScope.launch {
             _setupState.value = SetupState.Loading
             try {
-                val words = walletRepository.createWallet()
-                _generatedWords.value = words
-                _setupState.value = SetupState.WalletCreated(words)
+                walletRepository.walletManager.createNewWallet()
+                _setupState.value = SetupState.WalletRestored
             } catch (e: Exception) {
-                _setupState.value = SetupState.Error(e.message ?: "Gagal membuat wallet")
+                _setupState.value = SetupState.Error(e.message ?: "Failed to create wallet")
             }
         }
     }

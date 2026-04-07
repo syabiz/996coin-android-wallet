@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.coin996.wallet.R
 import com.coin996.wallet.data.repository.WalletRepository
 import com.coin996.wallet.utils.SecurePreferences
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +22,7 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_splash)
 
         lifecycleScope.launch {
             delay(1200) // show splash for 1.2 seconds

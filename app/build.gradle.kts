@@ -1,17 +1,16 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.kotlin.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safeargs)
 }
 
-android {
+extensions.configure<com.android.build.api.dsl.ApplicationExtension> {
     namespace = "com.coin996.wallet"
     compileSdk = 35
-
-    // Fitur generateLocaleConfig dinonaktifkan sementara untuk menjaga stabilitas build
-    // Jika dibutuhkan di masa depan, pastikan file resources.properties tersedia.
 
     defaultConfig {
         applicationId = "com.coin996.wallet"
@@ -58,11 +57,6 @@ android {
         isCoreLibraryDesugaringEnabled = true
     }
 
-    @Suppress("DEPRECATION")
-    kotlinOptions {
-        jvmTarget = "17"
-    }
-
     buildFeatures {
         viewBinding = true
         buildConfig = true
@@ -79,6 +73,12 @@ android {
                 "*.proto"
             )
         }
+    }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
     }
 }
 
@@ -100,19 +100,19 @@ dependencies {
 
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.room.ktx)
-    kapt(libs.androidx.room.compiler)
+    ksp(libs.androidx.room.compiler)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.compiler)
+    ksp(libs.hilt.compiler)
     implementation(libs.hilt.workmanager)
-    kapt(libs.hilt.workmanager.compiler)
+    ksp(libs.hilt.workmanager.compiler)
 
     implementation(libs.retrofit)
     implementation(libs.retrofit.moshi)
     implementation(libs.okhttp)
     implementation(libs.okhttp.logging)
     implementation(libs.moshi)
-    kapt(libs.moshi.codegen)
+    ksp(libs.moshi.codegen)
 
     implementation(libs.coroutines.android)
     implementation(libs.coroutines.core)

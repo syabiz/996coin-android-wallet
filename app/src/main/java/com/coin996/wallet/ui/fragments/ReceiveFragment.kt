@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import com.coin996.wallet.R
 import com.coin996.wallet.core.spv.AddressType
 import com.coin996.wallet.databinding.FragmentReceiveBinding
 import com.coin996.wallet.ui.viewmodels.ReceiveViewModel
@@ -87,15 +88,20 @@ class ReceiveFragment : Fragment() {
 
     private fun updateAddressTypeLabel(type: AddressType) {
         binding.tvAddressTypeDesc.text = when (type) {
-            AddressType.LEGACY        -> "Legacy P2PKH — kompatibel dengan wallet Qt 996coin"
-            AddressType.NESTED_SEGWIT -> "Nested SegWit P2SH-P2WPKH — fee lebih rendah"
-            AddressType.NATIVE_SEGWIT -> "Native SegWit Bech32 — dimulai '996', fee terendah"
+            AddressType.LEGACY        -> getString(R.string.receive_legacy_desc)
+            AddressType.NESTED_SEGWIT -> getString(R.string.receive_nested_desc)
+            AddressType.NATIVE_SEGWIT -> getString(R.string.receive_native_desc)
         }
     }
 
     private fun updateQr(address: String, amount: Double? = null) {
+        if (address.isEmpty() || address == "Loading…") return
         val uri = buildPaymentUri(address, amount)
-        binding.ivQrCode.setImageBitmap(generateQrCode(uri, 512))
+        try {
+            binding.ivQrCode.setImageBitmap(generateQrCode(uri, 512))
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     private fun shareAddress() {
@@ -104,13 +110,13 @@ class ReceiveFragment : Fragment() {
             AddressType.NESTED_SEGWIT -> "Nested SegWit"
             AddressType.NATIVE_SEGWIT -> "Native SegWit"
         }
-        val text = "Alamat 996coin saya ($typeLabel):\n$currentAddress"
+        val text = "My 996coin Address ($typeLabel):\n$currentAddress"
         startActivity(Intent.createChooser(
             Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
                 putExtra(Intent.EXTRA_TEXT, text)
-                putExtra(Intent.EXTRA_SUBJECT, "Alamat 996coin")
-            }, "Bagikan Alamat"
+                putExtra(Intent.EXTRA_SUBJECT, "996coin Address")
+            }, getString(R.string.receive_share)
         ))
     }
 

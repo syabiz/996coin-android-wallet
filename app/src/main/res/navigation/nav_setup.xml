@@ -16,6 +16,8 @@
             app:destination="@id/restoreWalletFragment"/>
         <action android:id="@+id/action_welcome_to_importWif"
             app:destination="@id/importWifFragment"/>
+        <action android:id="@+id/action_welcome_to_setPin"
+            app:destination="@id/setPinFragment"/>
     </fragment>
 
     <fragment

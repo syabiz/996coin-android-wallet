@@ -15,7 +15,7 @@
     <string name="pending_label">Pending</string>
     <string name="price_label">NNS Price</string>
     <string name="sync_progress">Syncing… %1$d%%</string>
-    <string name="sync_done">Synced</string>
+    <string name="sync_done">Connected</string>
     <string name="peers_connected">%1$d peers</string>
     <string name="chart_24h">24h Price Chart</string>
     <string name="pull_to_refresh">Pull to refresh</string>
@@ -45,10 +45,20 @@
     <string name="receive_new_address">New Address</string>
     <string name="address_copied">Address copied!</string>
     <string name="receive_note">Share this address to receive NNS coins</string>
+    <string name="receive_legacy_desc">Legacy P2PKH — compatible with original 996coin Qt wallet (Starts with N)</string>
+    <string name="receive_nested_desc">Nested SegWit P2SH — compatible with most modern wallets (Starts with 8)</string>
+    <string name="receive_native_desc">Native SegWit Bech32 — lowest fees and most efficient (Starts with 996)</string>
+    <string name="receive_amount_hint">Request amount (optional)</string>
+    <string name="receive_update_qr">Update QR with Amount</string>
 
     <!-- History -->
     <string name="history_title">Transactions</string>
     <string name="history_empty">No transactions yet</string>
+    <string name="history_empty_desc">Send or receive NNS to see transactions here</string>
+    <string name="history_filter_all">All</string>
+    <string name="history_filter_received">Received</string>
+    <string name="history_filter_sent">Sent</string>
+    <string name="history_filter_pending">Pending</string>
     <string name="tx_sent">Sent</string>
     <string name="tx_received">Received</string>
     <string name="tx_pending">Pending…</string>
@@ -70,16 +80,19 @@
 
     <!-- Setup -->
     <string name="setup_welcome">Welcome to\n996coin Wallet</string>
-    <string name="setup_create">Create New Wallet</string>
-    <string name="setup_restore">Restore Existing Wallet</string>
-    <string name="setup_seed_title">Your Recovery Phrase</string>
-    <string name="setup_seed_warning">Write these 12 words down and store them safely. Anyone with these words can access your funds.</string>
-    <string name="setup_seed_confirm">I have written these words down</string>
+    <string name="setup_create_address">Create New Address</string>
+    <string name="setup_import_wif_title">Import Private Key</string>
+    <string name="setup_import_wif_btn">Import Private Key (WIF)</string>
+    <string name="setup_import_wif_desc">Do you have a 996coin-Qt wallet? Use your Private Key to import funds.</string>
+    <string name="setup_import_wif_hint">Paste your Private Key (WIF)</string>
+    <string name="setup_import_wif_error">Invalid Private Key. Please check the format.</string>
+    <string name="setup_seed_title">Recovery Phrase</string>
+    <string name="setup_seed_warning">Write down these 12 words in order and keep them safe.</string>
+    <string name="setup_seed_confirm">Verify Recovery Phrase</string>
     <string name="setup_verify_title">Verify Recovery Phrase</string>
-    <string name="setup_verify_hint">Enter word #%1$d</string>
-    <string name="setup_restore_title">Enter Recovery Phrase</string>
-    <string name="setup_restore_hint">Enter your 12-word recovery phrase separated by spaces</string>
+    <string name="setup_restore_hint">Enter your 12-word recovery phrase</string>
     <string name="setup_pin_title">Set a PIN</string>
+
     <string name="setup_pin_hint">Enter 6-digit PIN</string>
     <string name="setup_pin_confirm">Confirm PIN</string>
     <string name="setup_pin_mismatch">PINs do not match</string>
