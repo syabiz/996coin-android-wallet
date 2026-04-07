@@ -77,24 +77,47 @@ class SettingsFragment : Fragment() {
                 .setTitle("Rescan Blockchain")
                 .setMessage("This will delete the local blockchain data and re-download it from peers. This may take a while.\n\nContinue?")
                 .setPositiveButton("Rescan") { _, _ ->
-                    // TODO: implement rescan (delete chain file, restart SPV)
-                    requireContext().let { ctx ->
-                        android.widget.Toast.makeText(ctx,
-                            "Rescan started. The app will restart sync.",
+                    lifecycleScope.launch {
+                        viewModel.walletRepository.walletManager.rescanBlockchain()
+                        android.widget.Toast.makeText(requireContext(),
+                            "Rescan started. The app is re-syncing from genesis/checkpoint.",
                             android.widget.Toast.LENGTH_LONG).show()
                     }
                 }
                 .setNegativeButton(R.string.btn_cancel, null)
                 .show()
         }
+
+        binding.rowShowSeed.setOnClickListener {
+            showPinDialog {
+                showSeedWords()
+            }
+        }
+    }
+
+    private fun showPinDialog(onSuccess: () -> Unit) {
+        val dialogBinding = com.coin996.wallet.databinding.DialogPinConfirmBinding.inflate(layoutInflater)
+        val dialog = MaterialAlertDialogBuilder(requireContext())
+            .setView(dialogBinding.root)
+            .setCancelable(true)
+            .create()
+
+        dialogBinding.btnConfirm.setOnClickListener {
+            val enteredPin = dialogBinding.etPin.text.toString()
+            if (securePreferences.verifyPin(enteredPin)) {
+                dialog.dismiss()
+                onSuccess()
+            } else {
+                dialogBinding.tilPin.error = "Incorrect PIN"
+            }
+        }
+        dialog.show()
     }
 
     private fun showSeedWords() {
-        // In production: require PIN/biometric before showing
-        val words = viewModel.walletState.value.let {
-            // get from wallet manager
-            "Word list will be displayed here after PIN confirmation"
-        }
+        val words = viewModel.walletRepository.walletManager.getMnemonicWords()?.joinToString(" ")
+            ?: "Mnemonic not available"
+
         MaterialAlertDialogBuilder(requireContext())
             .setTitle("Your Recovery Phrase")
             .setMessage(words)

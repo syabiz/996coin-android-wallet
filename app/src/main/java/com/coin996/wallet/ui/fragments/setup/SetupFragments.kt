@@ -144,6 +144,7 @@ class SetPinFragment : Fragment() {
     private val binding get() = _binding!!
     
     @Inject lateinit var securePreferences: SecurePreferences
+    @Inject lateinit var walletManager: com.coin996.wallet.core.spv.WalletManager
     
     private val pin = StringBuilder()
     private var isConfirming = false
@@ -202,8 +203,13 @@ class SetPinFragment : Fragment() {
             // Set instruction text if we had a dedicated title view
         } else {
             if (enteredPin == firstPin) {
-                securePreferences.savePin(enteredPin)
-                findNavController().navigate(R.id.action_setPin_to_complete)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    binding.loadingContainer.visibility = View.VISIBLE
+                    walletManager.encryptWallet(enteredPin)
+                    securePreferences.savePin(enteredPin)
+                    securePreferences.setWalletSetup(true)
+                    findNavController().navigate(R.id.action_setPin_to_complete)
+                }
             } else {
                 pin.setLength(0)
                 updateDots()

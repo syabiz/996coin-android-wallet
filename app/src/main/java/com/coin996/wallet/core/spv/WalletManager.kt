@@ -92,10 +92,29 @@ class WalletManager @Inject constructor(
     suspend fun createNewWallet(): String? = withContext(Dispatchers.IO) {
         val w = Wallet.createDeterministic(bjContext, Script.ScriptType.P2PKH)
         addSegWitWatching(w)
-        saveWalletSync(w)
         wallet = w
         updateState(w)
         getReceiveAddress(AddressType.LEGACY)
+    }
+
+    suspend fun encryptWallet(pin: String) = withContext(Dispatchers.IO) {
+        val w = wallet ?: return@withContext
+        if (!w.isEncrypted) {
+            w.encrypt(pin)
+            saveWalletSync(w)
+            updateState(w)
+        }
+    }
+
+    suspend fun decryptWallet(pin: String): Boolean = withContext(Dispatchers.IO) {
+        val w = wallet ?: return@withContext false
+        try {
+            if (w.isEncrypted) {
+                w.decrypt(pin)
+                return@withContext true
+            }
+            true
+        } catch (e: Exception) { false }
     }
 
     suspend fun restoreFromMnemonic(
@@ -103,7 +122,8 @@ class WalletManager @Inject constructor(
         creationTimeSec: Long? = null
     ): Boolean = withContext(Dispatchers.IO) {
         try {
-            val seed = DeterministicSeed(words, null, "", creationTimeSec ?: 1773496858L)
+            // Jan 01 2020 as a safe default if no time is provided, or 0L for full scan
+            val seed = DeterministicSeed(words, null, "", creationTimeSec ?: 0L)
             val w = Wallet.fromSeed(params, seed, Script.ScriptType.P2PKH)
             addSegWitWatching(w)
             chainFile.delete()
@@ -307,6 +327,7 @@ class WalletManager @Inject constructor(
         }
     }
 
+    @Synchronized
     private fun saveWalletSync(w: Wallet) {
         FileOutputStream(walletFile).use { WalletProtobufSerializer().writeWallet(w, it) }
     }
@@ -344,4 +365,17 @@ class WalletManager @Inject constructor(
     fun isConnected() = peerGroup?.isRunning == true
     fun getPeerCount() = peerGroup?.connectedPeers?.size ?: 0
     fun getMnemonicWords() = wallet?.keyChainSeed?.mnemonicCode
+
+    /** BUG 3 Fix: Implementasi Rescan Blockchain */
+    suspend fun rescanBlockchain() = withContext(Dispatchers.IO) {
+        val w = wallet ?: return@withContext
+        stopSync()
+        // Hapus file SPV chain agar mendownload ulang dari awal (atau dari checkpoint)
+        if (chainFile.exists()) chainFile.delete()
+        // Bersihkan transaksi lama di wallet untuk trigger re-discovery
+        w.clearTransactions(0)
+        saveWalletSync(w)
+        updateState(w)
+        startSync()
+    }
 }

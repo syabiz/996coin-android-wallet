@@ -112,6 +112,22 @@
             android:layout_columnWeight="1" />
     </GridLayout>
 
+    <!-- Loading -->
+    <LinearLayout
+        android:id="@+id/loading_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:layout_marginTop="16dp"
+        android:visibility="gone">
+        <ProgressBar android:layout_width="24dp" android:layout_height="24dp"
+            android:layout_marginEnd="10dp"/>
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="Securing wallet..."
+            android:textColor="@color/text_secondary" android:textSize="14sp"/>
+    </LinearLayout>
+
     <!-- Error -->
     <TextView
         android:id="@+id/tv_pin_error"

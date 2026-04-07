@@ -18,7 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val walletRepository: WalletRepository,
+    val walletRepository: WalletRepository,
     private val priceRepository: PriceRepository
 ) : ViewModel() {
 

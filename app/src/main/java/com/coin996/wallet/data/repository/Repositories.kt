@@ -49,7 +49,10 @@ class PriceRepository @Inject constructor(
             // Using official KlingEx API Base URL found in documentation
             val url = "https://api.klingex.io/api/v1/market/ticker?market=NNS_USDT"
             
-            val request = Request.Builder().url(url).build()
+            val request = Request.Builder()
+                .url(url)
+                .header("X-KLINGEX-API-KEY", "02981d03ea2cad4d172fff9455741e8c538198d8bebea02437e0a9cfd642e9a5")
+                .build()
             val response = okHttpClient.newCall(request).execute()
             
             if (response.isSuccessful) {
@@ -92,7 +95,10 @@ class PriceRepository @Inject constructor(
     suspend fun getPriceHistory(): Result<List<Pair<Long, Double>>> = try {
         // Updated historical endpoint based on standard KlingEx patterns
         val url = "https://api.klingex.io/api/v1/market/kline?market=NNS_USDT&interval=1h&limit=24"
-        val request = Request.Builder().url(url).build()
+        val request = Request.Builder()
+            .url(url)
+            .header("X-KLINGEX-API-KEY", "02981d03ea2cad4d172fff9455741e8c538198d8bebea02437e0a9cfd642e9a5")
+            .build()
         val response = okHttpClient.newCall(request).execute()
         if (response.isSuccessful) {
             val body = response.body?.string() ?: "{}"

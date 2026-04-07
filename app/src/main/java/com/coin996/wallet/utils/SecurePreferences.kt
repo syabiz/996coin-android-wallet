@@ -7,7 +7,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class SecurePreferences @Inject constructor(context: Context) {
+class SecurePreferences @Inject constructor(private val context: Context) {
 
     private val masterKey = MasterKey.Builder(context)
         .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
@@ -21,10 +21,34 @@ class SecurePreferences @Inject constructor(context: Context) {
         EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
     )
 
-    // Wallet pin
-    fun savePin(pin: String) = prefs.edit().putString(KEY_PIN, pin).apply()
-    fun getPin(): String? = prefs.getString(KEY_PIN, null)
+    // Wallet pin (Hashed)
+    fun savePin(pin: String) {
+        val salt = getDeviceSalt()
+        val hashedPin = hashPin(pin, salt)
+        prefs.edit().putString(KEY_PIN, hashedPin).apply()
+    }
+
+    fun verifyPin(enteredPin: String): Boolean {
+        val savedHash = prefs.getString(KEY_PIN, null) ?: return false
+        val salt = getDeviceSalt()
+        return hashPin(enteredPin, salt) == savedHash
+    }
+
     fun hasPin(): Boolean = prefs.contains(KEY_PIN)
+
+    private fun getDeviceSalt(): String {
+        return android.provider.Settings.Secure.getString(
+            context.contentResolver,
+            android.provider.Settings.Secure.ANDROID_ID
+        ) ?: "default_salt"
+    }
+
+    private fun hashPin(pin: String, salt: String): String {
+        val bytes = (pin + salt).toByteArray()
+        val md = java.security.MessageDigest.getInstance("SHA-256")
+        val digest = md.digest(bytes)
+        return digest.fold("") { str, it -> str + "%02x".format(it) }
+    }
 
     // Biometric enabled
     fun setBiometricEnabled(enabled: Boolean) =
